@@ -1,0 +1,417 @@
+/* ==========================================================================
+   ১. গ্লোবাল রিসেট, ফন্ট ও ভেরিয়েবল সেটআপ
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #FF6200;    /* আপনার ছবির সেই মূল ব্রাইট অরেঞ্জ কালার */
+    --primary-hover: #E05600;    /* বাটন হোভার কালার */
+    --bg-light: #F4F6F9;         /* লাইট ব্যাকগ্রাউন্ড */
+    --surface-white: #FFFFFF;    /* কার্ড ও কন্টেইনারের সাদা ব্যাকগ্রাউন্ড */
+    --text-dark: #333333;        /* মূল টেক্সট কালার */
+    --text-muted: #777777;       /* হালকা টেক্সট কালার */
+    --success-green: #2ECC71;    /* Done বা Success স্ট্যাটাস কালার */
+    --pending-yellow: #F1C40F;   /* Pending স্ট্যাটাস কালার */
+    --danger-red: #E74C3C;       /* Back বা Rejected স্ট্যাটাস কালার */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    -webkit-user-select: none;   /* মোবাইল অ্যাপের মতো জুম ও টেক্সট সিলেক্ট লক */
+    user-select: none;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    padding-top: 60px;          /* ফিক্সড হেডারের জন্য উপরে জায়গা রাখা */
+    padding-bottom: 60px;       /* ফিক্সড বটম বারের জন্য নিচে জায়গা রাখা */
+}
+
+/* ==========================================================================
+   ২. পাবলিক পেজ ও লগইন ইন্টারফেস (index.php & login.php)
+   ========================================================================== */
+.public-body {
+    background: linear-gradient(135deg, #FFF0E6 0%, #F4F6F9 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 9999; /* মেইন স্ক্রিন ঢেকে রাখার জন্য */
+}
+
+.welcome-container, .login-container {
+    background: var(--surface-white);
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.welcome-logo {
+    font-size: 55px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.welcome-container h1, .login-container h2 {
+    font-size: 24px;
+    color: var(--text-dark);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.login-subtitle {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 25px;
+}
+
+/* ইনপুট গ্রুপ */
+.input-group {
+    text-align: left;
+    margin-bottom: 18px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.input-group label i {
+    color: var(--primary-color);
+    margin-right: 4px;
+}
+
+.input-group input, .input-group select, .input-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1.5px solid #DDD;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    background: #FFF;
+    transition: border 0.2s;
+}
+
+.input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+    border-color: var(--primary-color);
+}
+
+/* বাটনস */
+.start-work-btn, .submit-login-btn, .submit-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: var(--primary-color);
+    color: #FFF;
+    text-decoration: none;
+    width: 100%;
+    padding: 14px;
+    font-weight: 700;
+    font-size: 15px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(255, 98, 0, 0.25);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.start-work-btn:active, .submit-login-btn:active, .submit-action-btn:active {
+    transform: scale(0.97);
+}
+
+.admin-contact-notice {
+    background-color: #FFF5EF;
+    border-left: 4px solid var(--primary-color);
+    padding: 15px;
+    margin-top: 25px;
+    border-radius: 0 8px 8px 0;
+    display: flex;
+    gap: 10px;
+    text-align: left;
+}
+
+.admin-contact-notice i { color: var(--primary-color); font-size: 18px; }
+.admin-contact-notice p { font-size: 12px; color: #666; line-height: 1.4; }
+
+/* ==========================================================================
+   ৩. টপ হেডার বার ও নোটিফিকেশন বেল (header.php)
+   ========================================================================== */
+.top-header {
+    background-color: var(--primary-color);
+    color: #FFF;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 60px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    color: #FFF;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.logo h1 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.notification-container {
+    position: relative;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.notification-badge {
+    position: absolute;
+    top: 4px; right: 4px;
+    width: 8px; height: 8px;
+    background-color: var(--danger-red);
+    border-radius: 50%;
+}
+
+/* ==========================================================================
+   ৪. সাইড নেভিগেশন ড্রয়ার (sidebar.php)
+   ========================================================================== */
+.sidebar {
+    position: fixed;
+    top: 0; left: -280px;
+    width: 280px; height: 100%;
+    background: var(--surface-white);
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    transition: left 0.3s ease-in-out;
+}
+
+.sidebar.active { left: 0; }
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: none;
+}
+
+.sidebar-overlay.active { display: block; }
+
+.sidebar-profile {
+    background: var(--primary-color);
+    color: #FFF;
+    padding: 30px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-avatar {
+    font-size: 28px;
+    background: rgba(255, 255, 255, 0.2);
+    width: 50px; height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.worker-name { font-size: 15px; font-weight: 600; }
+.worker-role { font-size: 11px; opacity: 0.8; }
+
+.sidebar-menu-items { padding: 15px 0; flex: 1; overflow-y: auto; }
+.menu-group-title { font-size: 11px; text-transform: uppercase; color: #999; padding: 10px 20px; font-weight: 600; }
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 20px;
+    color: var(--text-dark);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.menu-item i { width: 20px; text-align: center; color: #666; }
+.menu-item:hover, .menu-item.active { background-color: #FFF0E6; color: var(--primary-color); }
+.menu-item:hover i, .menu-item.active i { color: var(--primary-color); }
+
+.badge-new { background: var(--primary-color); color: white; font-size: 9px; padding: 2px 6px; border-radius: 10px; font-weight: 700; margin-left: auto; }
+.sidebar-footer { padding: 15px; }
+
+/* ==========================================================================
+   ৫. বটম নেভিগেশন বার (bottom-nav.php)
+   ========================================================================== */
+.bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0; width: 100%; height: 60px;
+    background: var(--surface-white);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    z-index: 999;
+}
+
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 11px;
+    gap: 4px;
+    font-weight: 500;
+}
+
+.nav-link i { font-size: 18px; }
+.nav-link.active { color: var(--primary-color); }
+
+/* ==========================================================================
+   ৬. ড্যাশবোর্ড কনটেন্ট, ফর্ম এবং টেবিল ডিজাইন (dashboard.php)
+   ========================================================================== */
+.main-content {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.page-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--text-dark);
+    border-left: 4px solid var(--primary-color);
+    padding-left: 10px;
+}
+
+/* ওয়ার্ক কার্ড (Job Cards) */
+.job-card {
+    background: var(--surface-white);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.job-info h3 { font-size: 15px; font-weight: 600; color: var(--text-dark); }
+.job-info p { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.job-price { color: var(--primary-color); font-weight: 700; font-size: 16px; }
+
+/* ডাইনামিক কাজের ফর্ম বক্স */
+.form-box {
+    background: var(--surface-white);
+    padding: 25px 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+}
+
+/* হিস্ট্রি ও ডাটা টেবিল */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    background: var(--surface-white);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 13px;
+}
+
+.data-table th {
+    background-color: #FFF0E6;
+    color: var(--primary-color);
+    padding: 12px 15px;
+    font-weight: 600;
+}
+
+.data-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #EEE;
+    color: #444;
+}
+
+/* স্ট্যাটাস ব্যাজ সমূহ (Pending/Done/Back) */
+.badge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge.success { background-color: #E8F8F5; color: var(--success-green); }
+.badge.pending { background-color: #FEF9E7; color: var(--pending-yellow); }
+.badge.danger { background-color: #FDEDEC; color: var(--danger-red); }
+
+/* ==========================================================================
+   ৭. অ্যাডমিন মাস্টার ড্যাশবোর্ড বাটন সিস্টেম (admin-dashboard.php)
+   ========================================================================== */
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.admin-master-btn {
+    background: var(--surface-white);
+    border: 2px solid #EEE;
+    padding: 30px 20px;
+    border-radius: 14px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    transition: all 0.2s;
+}
+
+.admin-master-btn i { font-size: 32px; color: var(--primary-color); }
+.admin-master-btn span { font-size: 14px; font-weight: 600; }
+.admin-master-btn:active, .admin-master-btn.active {
+    border-color: var(--primary-color);
+    background-color: #FFF0E6;
+    color: var(--primary-color);
+}
