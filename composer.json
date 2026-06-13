@@ -1,0 +1,13 @@
+{
+    "name": "sheikh-earning/google-sheets-system",
+    "description": "Sheikh Earning Website with Google Sheets Integration",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "google/apiclient": "^2.15"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}
